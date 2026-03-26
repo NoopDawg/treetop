@@ -43,12 +43,13 @@ def status(name: Optional[str]):
             inst_id = instance['InstanceId']
             inst_name = next(n for n, info in ec2_instances.items() if info["id"] == inst_id)
             instance_state = instance['State']['Name']
-            table_data.append([inst_name, inst_id, instance_state])
+            instance_type = instance.get('InstanceType', 'N/A')
+            table_data.append([inst_name, inst_id, instance_type, instance_state])
 
     # Add external instances (no EC2 ID)
     for inst_name, info in external_instances.items():
         ip = info.get("ip_address", "N/A")
-        table_data.append([inst_name, f"external ({ip})", "unknown"])
+        table_data.append([inst_name, f"external ({ip})", "N/A", "unknown"])
 
     headers = ["Instance Name", "Instance ID", "Instance Type", "State"]
     print(tabulate(table_data, headers, tablefmt="grid"))
