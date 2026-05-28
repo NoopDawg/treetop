@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "treetop"
+version = "2.0.0"
+description = "CLI tool for managing EC2 development instances"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "Anup Jonchhe" }
+]
+dependencies = [
+    "boto3>=1.28",
+    "tabulate>=0.9",
+]
+
+[project.scripts]
+treetop = "treetop.main:main"
