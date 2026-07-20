@@ -20,6 +20,7 @@ def connect(name: Optional[str] = None):
         print(f"No instance found with name: {name}")
         return
 
+    # Use per-instance SSH settings if available (external instances)
     ip_address = instance_info.get("ip_address")
     identity_file = instance_info.get("pem_key_location")
     username = instance_info.get("username", "ubuntu")

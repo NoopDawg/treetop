@@ -1,8 +1,15 @@
 import argparse
 import sys
 
+<<<<<<< HEAD
 from .command import up, down, status, delete, launch, connect, add, create_template, init
 
+=======
+# from .command.not_implemented import create, update_ssh
+from .command import up, down, status, delete, launch, version, connect, add
+from .config import add_init_command
+import logging
+>>>>>>> c04b7bd (adding add command to register external instances)
 
 def main(argv=None):
     import treetop
@@ -26,7 +33,15 @@ def main(argv=None):
     status.add_command(subparser)
     connect.add_command(subparser)
     add.add_command(subparser)
+<<<<<<< HEAD
     create_template.add_command(subparser)
+=======
+    # create.add_command(subparser)
+    # update_ssh.add_command(subparser)
+    version.add_command(subparser)
+    # create_template.add_command(subparser)
+    add_init_command(subparser)
+>>>>>>> c04b7bd (adding add command to register external instances)
 
     def print_help(args):
         parse.print_help()

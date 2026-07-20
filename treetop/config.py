@@ -130,11 +130,22 @@ def record_active_instance(name, instance_id, ip_address):
 
 
 def record_external_instance(name, instance_id, ip_address, username, pem_key_location):
+<<<<<<< HEAD
     if not os.path.exists(CONFIG_DIR):
         os.makedirs(CONFIG_DIR)
 
     if os.path.exists(ACTIVE_INSTANCES_FILE):
         with open(ACTIVE_INSTANCES_FILE, "r") as f:
+=======
+    config_dir = os.path.join(os.environ["HOME"], ".treetop")
+    active_instances_file = os.path.join(config_dir, "active_instances.json")
+
+    if not os.path.exists(config_dir):
+        os.makedirs(config_dir)
+
+    if os.path.exists(active_instances_file):
+        with open(active_instances_file, "r") as f:
+>>>>>>> c04b7bd (adding add command to register external instances)
             active_instances = json.load(f)
     else:
         active_instances = {}
@@ -148,7 +159,11 @@ def record_external_instance(name, instance_id, ip_address, username, pem_key_lo
 
     active_instances[name] = entry
 
+<<<<<<< HEAD
     with open(ACTIVE_INSTANCES_FILE, "w") as f:
+=======
+    with open(active_instances_file, "w") as f:
+>>>>>>> c04b7bd (adding add command to register external instances)
         json.dump(active_instances, f, indent=4)
 
     update_ssh_config(name, ip_address, pem_key_location, username=username)

@@ -9,6 +9,7 @@ def status(name: Optional[str]):
 
     active_instances = get_instances()
 
+    # Separate instances with and without EC2 IDs
     external_instances = {}
     ec2_instances = {}
     for inst_name, info in active_instances.items():
@@ -29,6 +30,7 @@ def status(name: Optional[str]):
 
     table_data = []
 
+    # Query EC2 for instances that have IDs
     if ec2_instances:
         instance_ids = [info["id"] for info in ec2_instances.values()]
         instances = []
@@ -41,12 +43,12 @@ def status(name: Optional[str]):
             inst_id = instance['InstanceId']
             inst_name = next(n for n, info in ec2_instances.items() if info["id"] == inst_id)
             instance_state = instance['State']['Name']
-            instance_type = instance.get('InstanceType', 'N/A')
-            table_data.append([inst_name, inst_id, instance_type, instance_state])
+            table_data.append([inst_name, inst_id, instance_state])
 
+    # Add external instances (no EC2 ID)
     for inst_name, info in external_instances.items():
         ip = info.get("ip_address", "N/A")
-        table_data.append([inst_name, f"external ({ip})", "N/A", "unknown"])
+        table_data.append([inst_name, f"external ({ip})", "unknown"])
 
     headers = ["Instance Name", "Instance ID", "Instance Type", "State"]
     print(tabulate(table_data, headers, tablefmt="grid"))

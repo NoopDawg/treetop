@@ -1,10 +1,8 @@
-from ..aws_client import get_ec2_client
-from ..config import record_external_instance
-from ..prompt_utils import input_with_path_completion
+import boto3
 
 
 def lookup_instance_id_by_ip(ip_address):
-    ec2_client = get_ec2_client()
+    ec2_client = boto3.client("ec2", region_name="us-east-1")
     response = ec2_client.describe_instances(
         Filters=[{"Name": "private-ip-address", "Values": [ip_address]}]
     )
@@ -15,10 +13,12 @@ def lookup_instance_id_by_ip(ip_address):
 
 
 def add():
+    from ..config import record_external_instance
+
     name = input("Enter a name for this instance: ")
     ip_address = input("Enter the IP address: ")
     username = input("Enter the SSH username [ubuntu]: ").strip() or "ubuntu"
-    pem_key_location = input_with_path_completion("Enter the path to the PEM key: ").strip()
+    pem_key_location = input("Enter the path to the PEM key: ").strip()
 
     print(f"Looking up instance ID for {ip_address}...")
     instance_id = lookup_instance_id_by_ip(ip_address)
