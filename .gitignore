@@ -1,5 +1,6 @@
 .DS_Store
 *.log
+<<<<<<< HEAD
 __pycache__/
 *.pyc
 dist/
@@ -7,3 +8,9 @@ dist/
 .venv/
 worktrees/
 bin/
+=======
+**__pycache__**
+bin/*
+bin
+worktrees/
+>>>>>>> 21ec58a (remove treetop.log file)
